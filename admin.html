@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Painel do processo seletivo · Clínica Moviment</title>
+<style>
+:root{font-family:Inter,Arial,sans-serif;color:#13241c;background:#f3f7f4}*{box-sizing:border-box}body{margin:0}
+header{background:#063d28;color:#fff;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+header strong{letter-spacing:2px}header small{color:#c5ead2;display:block;font-size:11px;letter-spacing:1px}
+main{padding:24px;max-width:1300px;margin:0 auto}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:20px}
+.card{background:#fff;border:1px solid #dfe9e1;border-radius:12px;padding:14px}
+.card strong{display:block;font-size:24px;color:#056e38}.card span{font-size:12px;color:#496757}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+input,select{padding:10px 12px;border:1px solid #b9cbbd;border-radius:9px;font-size:14px;background:#fff}
+input{flex:1;min-width:220px}
+button{background:#058844;color:#fff;border:0;border-radius:9px;padding:10px 16px;font-weight:700;cursor:pointer}
+button.ghost{background:#fff;color:#075c34;border:1px solid #9ecbb0}
+.wrap{background:#fff;border:1px solid #dfe9e1;border-radius:14px;overflow:auto}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{padding:10px;border-bottom:1px solid #e6eee8;text-align:left;vertical-align:top}
+th{background:#edf7f0;font-size:12px;letter-spacing:.5px;text-transform:uppercase;color:#345746;position:sticky;top:0}
+.chips{display:flex;gap:4px;flex-wrap:wrap}
+.chip{width:24px;height:24px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:800}
+.ok{background:#e6f7eb;color:#06743c}.bad{background:#fff0ed;color:#b72b20}.none{background:#eef1ef;color:#637668}
+.motivo{font-weight:700;color:#b72b20}.motivo.normal{color:#345746;font-weight:400}
+.muted{color:#637668;font-size:12px}
+#status{padding:30px;text-align:center;color:#637668}
+</style>
+</head>
+<body>
+<header>
+  <div><strong>CLÍNICA MOVIMENT</strong><small>PAINEL DO PROCESSO SELETIVO · RESTRITO</small></div>
+  <button class="ghost" onclick="load()">Atualizar</button>
+</header>
+
+<main>
+  <div class="cards">
+    <div class="card"><strong id="total">–</strong><span>tentativas</span></div>
+    <div class="card"><strong id="avg">–</strong><span>nota média</span></div>
+    <div class="card"><strong id="full">–</strong><span>concluídas (envio voluntário ou tempo)</span></div>
+    <div class="card"><strong id="interrupted">–</strong><span>encerradas por motivo</span></div>
+  </div>
+
+  <div class="toolbar">
+    <input id="q" placeholder="Buscar por nome, WhatsApp ou e-mail" oninput="render()">
+    <select id="filter" onchange="render()">
+      <option value="all">Todas as tentativas</option>
+      <option value="interrupted">Só encerradas por motivo</option>
+      <option value="complete">Só concluídas</option>
+    </select>
+  </div>
+
+  <div class="wrap">
+    <div id="status">Carregando…</div>
+    <table id="table" hidden>
+      <thead>
+        <tr>
+          <th>Recebido em</th><th>Candidato</th><th>Contato</th><th>Nota</th>
+          <th>Motivo de encerramento</th><th>Respostas (letra · acerto)</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+  <p class="muted">Os dados ficam apenas na planilha vinculada a este script. Não compartilhe este link.</p>
+</main>
+
+<script>
+let data = [];
+
+const COMPLETE_REASONS = ['Envio voluntário', 'Tempo esgotado'];
+
+function esc(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function load(){
+  document.getElementById('status').hidden = false;
+  document.getElementById('status').textContent = 'Carregando…';
+  document.getElementById('table').hidden = true;
+  google.script.run
+    .withSuccessHandler(rows => { data = rows; render(); })
+    .withFailureHandler(err => {
+      document.getElementById('status').textContent = 'Não foi possível carregar: ' + err.message;
+    })
+    .getRows();
+}
+
+function render(){
+  const q = document.getElementById('q').value.trim().toLowerCase();
+  const f = document.getElementById('filter').value;
+
+  const isComplete = r => COMPLETE_REASONS.includes(r.motivo);
+  const filtered = data.filter(r => {
+    if (f === 'interrupted' && isComplete(r)) return false;
+    if (f === 'complete' && !isComplete(r)) return false;
+    if (!q) return true;
+    return [r.nome, r.whatsapp, r.email].join(' ').toLowerCase().includes(q);
+  });
+
+  // Resumo (sobre todas as tentativas, não só as filtradas)
+  const notas = data.map(r => r.nota).filter(n => !isNaN(n));
+  document.getElementById('total').textContent = data.length;
+  document.getElementById('avg').textContent = notas.length ? (notas.reduce((a,b)=>a+b,0)/notas.length).toFixed(1) : '–';
+  document.getElementById('full').textContent = data.filter(isComplete).length;
+  document.getElementById('interrupted').textContent = data.filter(r => !isComplete(r)).length;
+
+  const tbody = document.getElementById('rows');
+  tbody.innerHTML = '';
+  filtered.sort((a,b) => b.recebido.localeCompare(a.recebido) || 0);
+
+  filtered.forEach(r => {
+    const tr = document.createElement('tr');
+    const chips = r.respostas.map((letter, i) => {
+      const mark = r.acertos[i];
+      const cls = letter === '-' ? 'none' : (mark === 'V' ? 'ok' : 'bad');
+      return `<span class="chip ${cls}" title="Questão ${i+1}: ${letter === '-' ? 'sem resposta' : (mark === 'V' ? 'correta' : 'incorreta')}">${esc(letter)}</span>`;
+    }).join('');
+    const motivoCls = isComplete(r) ? 'motivo normal' : 'motivo';
+    tr.innerHTML = `
+      <td>${esc(r.recebido)}</td>
+      <td><strong>${esc(r.nome)}</strong><div class="muted">Início ${esc(r.inicio)}<br>Fim ${esc(r.fim)}</div></td>
+      <td>${esc(r.whatsapp)}<div class="muted">${esc(r.email)}</div></td>
+      <td><strong>${esc(r.nota)}</strong> / 10</td>
+      <td class="${motivoCls}">${esc(r.motivo)}</td>
+      <td><div class="chips">${chips}</div></td>`;
+    tbody.appendChild(tr);
+  });
+
+  document.getElementById('table').hidden = filtered.length === 0;
+  document.getElementById('status').hidden = filtered.length !== 0;
+  document.getElementById('status').textContent = data.length ? 'Nenhum resultado para este filtro.' : 'Nenhuma tentativa registrada ainda.';
+}
+
+load();
+</script>
+</body>
+</html>
