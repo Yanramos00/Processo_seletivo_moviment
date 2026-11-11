@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Processo Seletivo | Clínica Moviment</title>
+<style>
+:root{font-family:Inter,Arial,sans-serif;color:#13241c;background:#f3f7f4}*{box-sizing:border-box}body{margin:0}.top{background:#063d28;color:white;padding:15px max(20px,calc((100vw - 1000px)/2));display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;align-items:center;gap:13px}.brand strong{display:block;letter-spacing:2px;font-size:20px}.brand small{letter-spacing:1.2px;color:#c5ead2;font-size:10px}.pill{border:1px solid #67c18e;border-radius:30px;padding:9px 14px;font-size:12px}main{max-width:900px;margin:40px auto;padding:0 20px 60px}.panel{background:white;border:1px solid #dfe9e1;border-radius:20px;padding:clamp(22px,4vw,44px);box-shadow:0 12px 35px #003b1810}.eyebrow{font-size:12px;font-weight:800;letter-spacing:2px;color:#168249;text-transform:uppercase}h1{font-size:clamp(30px,5vw,48px);margin:12px 0}p{line-height:1.65;color:#4b6354}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:25px 0}.stat{background:#edf7f0;border-radius:12px;padding:15px}.stat strong{font-size:24px;display:block;color:#056e38}.stat span{font-size:12px;color:#496757}.field{margin:16px 0}label{display:block;font-weight:700;margin-bottom:8px;font-size:14px}input{width:100%;padding:14px;border:1px solid #b9cbbd;border-radius:10px;font-size:16px}input:focus{outline:2px solid #0b9d4d}.button{background:#058844;color:white;border:0;border-radius:12px;padding:15px 24px;font-weight:800;font-size:15px;cursor:pointer}.button:hover{background:#006f34}.button:disabled{background:#9eafa4;cursor:not-allowed}.ghost{background:white;color:#075c34;border:1px solid #9ecbb0}.rules{background:#f6faf7;border-left:4px solid #078b47;padding:16px;border-radius:8px;margin:24px 0}.rules li{margin:9px 0;color:#395747}.check{display:flex;align-items:flex-start;gap:9px;margin:20px 0}.check input{width:auto;margin-top:3px}.check label{font-weight:400;margin:0}.hide{display:none!important}.examtop{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.timer{font-size:27px;font-weight:900;color:#056d3b;font-variant-numeric:tabular-nums}.timer.danger{color:#c72c2c}.bar{height:9px;border-radius:9px;background:#e1ece4;overflow:hidden;margin:20px 0 32px}.fill{height:100%;background:#078f49;width:0;transition:width .2s}.question{padding:22px 0;border-bottom:1px solid #e2ebe5}.question h3{font-size:17px;line-height:1.5;margin:8px 0 15px}.tag{font-size:11px;color:#078344;font-weight:800;letter-spacing:1px;text-transform:uppercase}.option{display:flex;align-items:flex-start;gap:12px;border:1px solid #dce7df;border-radius:11px;padding:13px;margin:8px 0;cursor:pointer;font-size:14px;line-height:1.5}.option:has(input:checked){border-color:#078a47;background:#effaf2}.option input{width:auto;margin:2px 0 0;accent-color:#078a47}.bottom{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:28px}.notice{font-size:13px;color:#637668}.muted{font-size:13px}.footer{text-align:center;color:#678071;font-size:12px;margin-top:30px}
+@media(max-width:600px){.stats{grid-template-columns:repeat(3,1fr)}.stat{padding:12px 8px}.stat strong{font-size:19px}.top{padding:12px 18px}.brand strong{font-size:16px}.pill{font-size:10px}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><div><strong>CLÍNICA MOVIMENT</strong><small>PROCESSO SELETIVO</small></div></div>
+  <div class="pill">Prova seletiva</div>
+</header>
+
+<main>
+  <!-- ETAPA 1: identificação -->
+  <section id="intro" class="panel">
+    <div class="eyebrow">Processo seletivo</div>
+    <h1>Prova seletiva</h1>
+    <p>Esta prova avalia situações práticas de atendimento, relacionamento e vendas. Leia as regras com atenção antes de começar.</p>
+
+    <div class="stats">
+      <div class="stat"><strong>10</strong><span>questões</span></div>
+      <div class="stat"><strong>20 min</strong><span>de duração</span></div>
+      <div class="stat"><strong>1 ponto</strong><span>por questão</span></div>
+    </div>
+
+    <div class="rules">
+      <ul>
+        <li>Responda uma única alternativa por questão.</li>
+        <li>O tempo começa ao clicar em “Iniciar prova” e não pode ser pausado.</li>
+        <li>Não troque de aba nem minimize a janela durante a prova. Isso encerra a avaliação.</li>
+        <li>Após finalizar, não é possível refazer a prova.</li>
+      </ul>
+    </div>
+
+    <div class="field"><label for="name">Nome completo</label><input id="name" autocomplete="name"></div>
+    <div class="field"><label for="phone">WhatsApp (com DDD)</label><input id="phone" inputmode="tel" autocomplete="tel"></div>
+    <div class="field"><label for="email">E-mail</label><input id="email" type="email" autocomplete="email"></div>
+
+    <div class="check">
+      <input type="checkbox" id="agree">
+      <label for="agree">Li as regras e concordo com o uso das minhas informações apenas para este processo seletivo.</label>
+    </div>
+
+    <p id="startError" class="notice"></p>
+    <button id="start" class="button">Iniciar prova</button>
+  </section>
+
+  <!-- ETAPA 2: prova -->
+  <section id="exam" class="panel hide">
+    <div class="examtop">
+      <div>
+        <div class="eyebrow">Candidato</div>
+        <strong id="candidateName"></strong>
+      </div>
+      <div id="timer" class="timer">20:00</div>
+    </div>
+    <div class="bar"><div id="progress" class="fill"></div></div>
+
+    <div id="questions"></div>
+
+    <div class="bottom">
+      <span id="answered" class="notice"></span>
+      <button id="finish" class="button">Finalizar prova</button>
+    </div>
+  </section>
+
+  <!-- ETAPA 3: encerramento -->
+  <section id="result" class="panel hide">
+    <div class="eyebrow">Resultado</div>
+    <h1 id="resultTitle">Avaliação encerrada</h1>
+    <p id="resultMessage"></p>
+    <p id="details" class="muted"></p>
+    <button id="download" class="button ghost">Baixar comprovante</button>
+  </section>
+
+  <div class="footer">Clínica Moviment · Processo seletivo</div>
+</main>
+
+<script>
+// URL do Web App do Apps Script (cole aqui após publicar o Code.gs)
+const ENDPOINT = 'https://script.google.com/macros/s/AKfycbzy3Y3LOQbScIRTvq2UUMKEgoG49v1J6nwbE1cvVnLVprji9QUOcRZJINyNVoZ6d3ZgGg/exec';
+const KEY = 'moviment_prova_v2';
+const TIME_LIMIT_MS = 1200000; // 20 minutos
+
+// O gabarito NÃO fica aqui: a pontuação é feita no servidor (Code.gs).
+const QUESTIONS = [
+{t:"Vendas",q:"Um lead pergunta “Qual o valor da avaliação?” e, após receber a informação, diz “Achei caro”. A agenda tem horários livres, mas você não tem autorização para descontos. Qual resposta combina maior chance de conversão com transparência?",a:["“O valor é definido pela clínica. Posso enviar a tabela completa e deixar que você decida quando quiser fazer o agendamento.”","“Posso entender sua expectativa de valor? Explico o que a avaliação inclui e verifico horários disponíveis, se fizer sentido.”","“Entendo a preocupação. O tratamento costuma funcionar para todos, então posso reservar uma avaliação para você agora.”","“O valor é o informado, mas posso oferecer um desconto especial hoje e solicitar a autorização da gestão depois.”"]},
+{t:"Conversão",q:"Uma pessoa confirma interesse em Pilates, pede horários pela manhã e informa que só decidirá depois de conversar com a família. Você encontrou duas vagas reais. Qual próximo passo é mais adequado?",a:["Informar os horários disponíveis e efetuar uma reserva definitiva, pois o interesse inicial já indica intenção de matrícula.","Apresentar as opções e solicitar um sinal de pagamento para manter a prioridade enquanto a família decide.","Apresentar as duas opções, esclarecer dúvidas e combinar um retorno, sem pressão nem promessa de reserva.","Enviar as opções e aguardar a iniciativa da pessoa, evitando qualquer contato posterior sobre a decisão."]},
+{t:"Proatividade",q:"Às 8h, um paciente presencial aguarda confirmação de pagamento; dois leads de WhatsApp estão há 6 minutos sem resposta e a agenda mostra uma duplicidade para as 8h30. Você está sozinho na recepção. Qual sequência é mais responsável?",a:["Atender o paciente presente, avisar brevemente os leads, conferir a duplicidade e acionar a equipe antes das 8h30.","Responder primeiro aos dois leads, pois o tempo de resposta comercial é prioridade sobre demandas presenciais.","Concluir a cobrança e eliminar o agendamento duplicado que parecer menos provável, sem interromper a equipe.","Pedir ao paciente que aguarde, não responder aos leads e solicitar orientação antes de qualquer providência."]},
+{t:"Prospecção",q:"A clínica quer preencher horários ociosos amanhã. Há uma lista de antigos interessados, mas parte dos contatos nunca autorizou receber campanhas. Qual plano é o mais adequado?",a:["Enviar a campanha para os antigos contatos, desde que o conteúdo seja útil e contenha opção de não receber mais.","Priorizar os pacientes com maior potencial financeiro, mesmo que não tenham demonstrado interesse recentemente.","Informar que restam pouquíssimas vagas para estimular resposta, mesmo quando a agenda possui vários horários.","Selecionar contatos com permissão, oferecer horários reais e registrar as respostas no sistema de atendimento."]},
+{t:"Relacionamento",q:"Uma paciente afirma que foi cobrada por uma sessão que diz ter desmarcado. No sistema consta falta, mas não há registro claro do aviso. Qual conduta é a mais adequada?",a:["Manter a cobrança com base no registro do sistema e orientar a paciente a apresentar comprovante do aviso.","Ouvir, verificar mensagens e regras, registrar a divergência e encaminhar a decisão à pessoa autorizada.","Suspender a cobrança imediatamente para preservar a satisfação e pedir que a equipe regularize depois.","Explicar as regras gerais de faltas e solicitar que a paciente trate a contestação diretamente com a gestão."]},
+{t:"Vendas",q:"Um paciente pergunta se o tratamento “vai curar com certeza” e demonstra intenção de fechar um pacote. Qual resposta é comercialmente correta?",a:["Explicar que o pacote completo oferece maior previsibilidade e assegurar a cura quando o paciente seguir as sessões.","Evitar discutir prognóstico, apresentar as condições de pagamento e direcionar a pessoa para fechar o pacote.","Esclarecer que não há garantia individual de resultado e orientar uma avaliação antes da escolha do tratamento.","Informar que os resultados são praticamente certos quando o paciente comparece a todas as sessões indicadas."]},
+{t:"Organização",q:"Você percebe que um contrato não está assinado, o paciente já começou o atendimento e a equipe clínica está ocupada. Qual atitude mostra iniciativa sem ultrapassar sua função?",a:["Verificar o contrato, comunicar o responsável, organizar a regularização e registrar a pendência sem alterar assinaturas.","Pedir autorização verbal ao paciente e assinar em seu nome, registrando que houve consentimento na recepção.","Arquivar o documento provisoriamente e aguardar o encerramento do tratamento para resolver a assinatura pendente.","Suspender todos os atendimentos seguintes e informar que nenhum profissional pode prosseguir até nova orientação."]},
+{t:"Prospecção",q:"Você enviou uma proposta a um lead interessado e fez um follow-up combinado. Ele responde: “Agora não quero receber mensagens”. Qual atitude demonstra maturidade comercial?",a:["Confirmar o recebimento, mas continuar contatos ocasionais sobre novidades, pois o lead já demonstrou interesse.","Retirar o número das mensagens diretas e transferi-lo para uma lista geral de ofertas e comunicados da clínica.","Enviar uma proposta final mais vantajosa e, se não houver resposta, interromper definitivamente as mensagens.","Respeitar o pedido, interromper contatos promocionais e registrar a preferência, mantendo só comunicações permitidas."]},
+{t:"Relacionamento",q:"Um paciente elogia a equipe e diz que pode indicar amigos. A clínica possui campanha de indicações, mas você não sabe se ela ainda está vigente. O que faz?",a:["Agradecer e explicar os benefícios da campanha anterior, informando que a confirmação das regras será feita depois.","Agradecer, conferir a campanha vigente e convidar a avaliar a clínica espontaneamente, sem exigir nota positiva.","Solicitar os contatos dos amigos para registrar as indicações e apresentar a campanha diretamente a cada pessoa.","Oferecer uma vantagem caso o paciente deixe uma avaliação máxima e recomende a clínica a conhecidos."]},
+{t:"Conversão",q:"No fim do expediente, o relatório mostra 30 novos leads, 12 agendamentos e 8 comparecimentos. O gestor pede a taxa de agendamento sobre leads e a taxa de comparecimento sobre agendamentos. Qual alternativa está correta?",a:["40% de agendamento e aproximadamente 66,7% de comparecimento.","26,7% de agendamento e aproximadamente 40% de comparecimento.","40% de agendamento e aproximadamente 26,7% de comparecimento.","66,7% de agendamento e aproximadamente 40% de comparecimento."]}
+];
+
+let state = null, interval = null, ended = false;
+const $ = id => document.getElementById(id);
+
+function save(){ localStorage.setItem(KEY, JSON.stringify(state)); }
+function show(id){ ['intro','exam','result'].forEach(x => $(x).classList.toggle('hide', x !== id)); }
+function fmt(t){ return new Date(t).toLocaleString('pt-BR'); }
+function uid(){ return (crypto.randomUUID ? crypto.randomUUID() : Date.now() + '-' + Math.random().toString(16).slice(2)); }
+
+function start(){
+  if(localStorage.getItem(KEY)){ showStored(); return; }
+  const name  = $('name').value.trim();
+  const phone = $('phone').value.replace(/\D/g,'');
+  const email = $('email').value.trim();
+  if(name.length < 5 || phone.length < 10 || !$('email').checkValidity() || !$('agree').checked){
+    $('startError').textContent = 'Preencha nome, WhatsApp e e-mail válidos e aceite as regras.';
+    return;
+  }
+  state = { id: uid(), name, phone, email, started: Date.now(), answers: {}, finished: null, reason: null, sent: false };
+  save();
+  $('candidateName').textContent = name;
+  renderQuestions();
+  show('exam');
+  tick();
+  interval = setInterval(tick, 250);
+}
+
+function renderQuestions(){
+  $('questions').innerHTML = '';
+  QUESTIONS.forEach((q, i) => {
+    const block = document.createElement('div');
+    block.className = 'question';
+    const tag = document.createElement('div');
+    tag.className = 'tag';
+    tag.textContent = `Questão ${i+1} · ${q.t} · 1 ponto`;
+    const title = document.createElement('h3');
+    title.textContent = q.q;
+    block.append(tag, title);
+    q.a.forEach((answer, j) => {
+      const lab = document.createElement('label');
+      lab.className = 'option';
+      const radio = document.createElement('input');
+      radio.type = 'radio';
+      radio.name = 'q' + i;
+      radio.value = j;
+      radio.checked = state.answers[i] === j;
+      radio.addEventListener('change', () => {
+        if(ended) return;
+        state.answers[i] = j;
+        save();
+        updateProgress();
+      });
+      const txt = document.createElement('span');
+      txt.textContent = 'ABCD'[j] + ') ' + answer;
+      lab.append(radio, txt);
+      block.append(lab);
+    });
+    $('questions').append(block);
+  });
+  updateProgress();
+}
+
+function updateProgress(){
+  const n = Object.keys(state.answers).length;
+  $('answered').textContent = `${n} de ${QUESTIONS.length} questões respondidas`;
+  $('progress').style.width = (n / QUESTIONS.length * 100) + '%';
+}
+
+function tick(){
+  if(!state || ended) return;
+  const remain = Math.max(0, TIME_LIMIT_MS - (Date.now() - state.started));
+  const s = Math.ceil(remain / 1000);
+  $('timer').textContent = String(Math.floor(s/60)).padStart(2,'0') + ':' + String(s%60).padStart(2,'0');
+  $('timer').classList.toggle('danger', s <= 120);
+  if(remain <= 0) finish('Tempo esgotado');
+}
+
+function payload(){
+  return {
+    id: state.id, name: state.name, phone: state.phone, email: state.email,
+    started: state.started, finished: state.finished, reason: state.reason,
+    answers: Array.from({length: QUESTIONS.length}, (_, i) => state.answers[i] ?? null)
+  };
+}
+
+// Envia ao servidor. Se falhar, fica marcado como não enviado e é reenviado na próxima abertura.
+function send(){
+  if(!state || state.sent) return;
+  fetch(ENDPOINT, {
+    method: 'POST',
+    headers: {'Content-Type': 'text/plain;charset=utf-8'},
+    body: JSON.stringify(payload()),
+    keepalive: true
+  })
+  .then(r => r.json())
+  .then(j => { if(j.ok && state){ state.sent = true; save(); } })
+  .catch(() => {});
+}
+
+function finish(reason){
+  if(!state || ended) return;
+  ended = true;
+  clearInterval(interval);
+  state.finished = Date.now();
+  state.reason = reason;
+  save();
+  send();
+  showResult();
+}
+
+function showResult(){
+  ended = true;
+  clearInterval(interval);
+  show('result');
+  $('resultTitle').textContent = 'Avaliação encerrada';
+  $('resultMessage').textContent = 'Agradecemos sua participação no processo seletivo da Clínica Moviment. Nossa equipe entrará em contato para informar os candidatos classificados para a próxima etapa.';
+  $('details').textContent = `Candidato: ${state.name} · Data: ${fmt(state.finished)}.`;
+}
+
+function showStored(){
+  try{
+    state = JSON.parse(localStorage.getItem(KEY));
+    if(!state || !state.started) throw Error('estado inválido');
+    if(!state.finished){
+      ended = false;
+      finish('Tentativa interrompida ou página recarregada');
+    } else {
+      ended = true;
+      if(!state.sent) send(); // reenvio de tentativa que não chegou ao servidor
+      showResult();
+    }
+  }catch(e){
+    localStorage.removeItem(KEY);
+    state = null;
+    show('intro');
+  }
+}
+
+$('start').onclick = start;
+
+$('finish').onclick = () => {
+  if(!state || ended) return;
+  const missing = QUESTIONS.findIndex((_, i) => state.answers[i] === undefined);
+  if(missing !== -1){
+    $('answered').textContent = `Faltam ${QUESTIONS.length - Object.keys(state.answers).length} questão(ões). Responda todas antes de finalizar.`;
+    document.querySelectorAll('.question')[missing].scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+  finish('Envio voluntário');
+};
+
+$('download').onclick = () => {
+  const content = `CLÍNICA MOVIMENT — COMPROVANTE DE PARTICIPAÇÃO\nNome: ${state.name}\nData: ${fmt(state.finished)}\n\nAgradecemos sua participação. Entraremos em contato para informar os candidatos classificados para a próxima etapa.\n`;
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([content], {type:'text/plain;charset=utf-8'}));
+  a.download = 'comprovante-participacao-moviment.txt';
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 500);
+};
+
+// Regras de encerramento automático (mesmas da versão original)
+document.addEventListener('visibilitychange', () => {
+  if(document.hidden && state && !ended) finish('Troca de aba ou janela minimizada');
+});
+window.addEventListener('blur', () => {
+  if(state && !ended) finish('Perda de foco da janela');
+});
+window.addEventListener('pagehide', () => {
+  if(state && !ended){
+    state.finished = Date.now();
+    state.reason = 'Página fechada ou navegação interrompida';
+    ended = true;
+    clearInterval(interval);
+    save();
+    send();
+  }
+});
+
+if(localStorage.getItem(KEY)) showStored();
+</script>
+</body>
+</html>
